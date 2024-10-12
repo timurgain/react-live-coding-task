@@ -1,16 +1,19 @@
 import { FC } from "react";
-import { Modal } from "../common/modal";
 import { useParams } from "react-router-dom";
-import { MockProductPageGateway } from "../../../gateways/product-page";
+import { productPageApi as api } from "../../../store/api/product-page";
 
 export const ProductPage: FC = () => {
 
   const { productId } = useParams<{ productId: string }>();
-  // MockProductPageGateway.getProduct(productId);
+  const { data: product, error } = api.useGetProductQuery(productId as string);
 
   return (
     <div>
-      productId: {productId}
+      productId: {product?.id}
+      <br />
+      name: {product?.name}
+      <br />
+      price: {product?.price}
     </div>
   );
 };

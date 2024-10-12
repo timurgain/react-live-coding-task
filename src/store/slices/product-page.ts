@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { LinkedProduct, Product } from "../../models";
+import { Product } from "../../models";
 
 type CatalogPageState = {
   product: Product | undefined;
-  linkedProducts: LinkedProduct[] | undefined;
+  linkedProducts: Product[] | undefined;
   comparingProducts: Product[] | undefined;
 };
 
@@ -16,11 +16,16 @@ const defaultState: CatalogPageState = {
 const productPageSlice = createSlice({
   name: "product-page",
   initialState: defaultState,
-  reducers: {},
-  extraReducers: (builder) => {
-    // builder.addCase('type', (state: CatalogPageState, action: PayloadAction<Product>) => {
-
-    // })
+  reducers: {
+    addProductToCompareList: (
+      state: CatalogPageState,
+      action: PayloadAction<Product>
+    ) => {
+      if (!state.comparingProducts) {
+        state.comparingProducts = [];
+      }
+      state.comparingProducts.push(action.payload);
+    },
   }
 });
 
