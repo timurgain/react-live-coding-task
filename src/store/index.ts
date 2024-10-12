@@ -1,16 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
-import { productPageReducer } from './reducers/product-page';
+import { productPageReducer } from './slices/product-page';
 
 export const rootReducer = combineReducers({
   productPage: productPageReducer,
 });
-export type RootState = ReturnType<typeof rootReducer>;
-
-const preloadedState: Partial<RootState> = {};
 
 export const store = configureStore({
   reducer: rootReducer,
-  preloadedState,
 });
-export const dispatch = store.dispatch;
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
