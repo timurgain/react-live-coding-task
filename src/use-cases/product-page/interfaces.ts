@@ -1,16 +1,22 @@
 import { Category, LinkedProduct, Product } from "../../models";
 
+export type categoryId = string;
+
 export interface IProductPageUseCases {
   /**
    * Возвращает данные о товаре для страницы товара
    */
   getProduct(productId: string): Promise<Product>;
   /**
-   * Возвращает связанные товары для товара с идентификатором productId
+   * Возвращает связанные товары (подготовленные для отображения) для товара с идентификатором productId
    */
-  getLinkedProducts(productId: string, categoryId: string): Promise<LinkedProduct[]>;
+  getLinkedProducts(
+    productId: string,
+    categoryId: string,
+    categoriesSet: Set<categoryId>
+  ): Promise<LinkedProduct[]>;
   /**
-   * Возвращает список категорий
+   * Возвращает Set из id всех категорий, в том числе вложенных
    */
-  getCategories(): Promise<Category[]>;
+  getCategoriesIdSet(): Promise<Set<categoryId>>;
 }

@@ -1,5 +1,6 @@
 import { productPageApi as api } from "../../store/api/product-page";
 
+
 export function useFetchProductData(productId: string | undefined) {
   if (!productId)
     return { product: null, linkedProducts: null, error: null, loading: false };
@@ -11,15 +12,21 @@ export function useFetchProductData(productId: string | undefined) {
   } = api.useGetProductQuery(productId, { skip: !productId });
 
   const {
+    data: categoriesSet,
+    error: categoriesError,
+    isLoading: categoriesLoading
+  } = api.useGetCategoriesIdSetQuery(undefined, { skip: !productId })
+
+  const {
     data: linkedProducts,
     error: linkedProductsError,
     isLoading: linkedProductsLoading,
   } = api.useGetLinkedProductsQuery(
-    { productId, categoryId: product?.category?.id },
+    { productId, categoriesSet, categoryId: product?.category?.id },
     { skip: !productId }
   );
 
-  const error = productError || linkedProductsError;
+  const error = productError || linkedProductsError || categoriesError;
   let errorMessage: string | null = null;
 
   if (error) {
@@ -34,6 +41,6 @@ export function useFetchProductData(productId: string | undefined) {
     product,
     linkedProducts,
     error: errorMessage,
-    loading: productLoading || linkedProductsLoading,
+    loading: productLoading || linkedProductsLoading || categoriesLoading,
   };
 }

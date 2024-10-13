@@ -1,7 +1,7 @@
 // useCases/productUseCases.ts
 import { IProductPageRepository } from "../../services/products/interfaces";
 import { Product, Category, LinkedProduct } from "../../models";
-import { IProductPageUseCases } from "./interfaces";
+import { categoryId, IProductPageUseCases } from "./interfaces";
 
 /**
  * Use case for product page, takes a gateway (fethces data from API) as a dependency.
@@ -16,32 +16,58 @@ export class ProductPageUseCases implements IProductPageUseCases {
 
   async getLinkedProducts(
     productId: string,
-    categoryId: string | undefined
+    categoryId: string | undefined,
+    categoriesSet: Set<categoryId> | undefined
   ): Promise<LinkedProduct[]> {
     const products = await this.productPageRepository.getLinkedProducts(
       productId
     );
-    return transformedLinkedProducts(products, categoryId);
+    return addlinkTypeToProducts(products, categoryId, categoriesSet);
   }
 
-  async getCategories(): Promise<Category[]> {
-    return this.productPageRepository.getCategories();
+  async getCategoriesIdSet(): Promise<Set<categoryId>> {
+    const categories = await this.productPageRepository.getCategories();
+    return extractCategoriesIds(categories);
   }
 }
 
-export function transformedLinkedProducts(
+function addlinkTypeToProducts(
   products: Product[],
-  categoryId: string | undefined
+  categoryId: string | undefined,
+  categoriesSet: Set<categoryId> | undefined
 ): LinkedProduct[] {
   return products.map((product) => {
     const linkType = () => {
-      if (!product.category?.id || !categoryId) return undefined;
-      if (product.category.id === categoryId) return "analog";
-      return "related";
+      const linkedProductCategoryId = product.category?.id
+      if (
+        !linkedProductCategoryId ||
+        !categoryId ||
+        !categoriesSet ||
+        !categoriesSet.has(linkedProductCategoryId)
+      )
+        return undefined;
+      if (linkedProductCategoryId === categoryId) return "analog";
+      if (linkedProductCategoryId && categoryId) return "related";
     };
+
     return {
       ...product,
       linkType: linkType(),
     };
   });
+}
+
+export function extractCategoriesIds(categories: Category[]) {
+  const result: Set<categoryId> = new Set();
+
+  function extract(categories: Category[], ids: Set<categoryId>) {
+    for (const category of categories) {
+      ids.add(category.id);
+      if (category.children) {
+        extract(category.children, ids);
+      }
+    }
+  }
+  extract(categories, result);
+  return result;
 }
