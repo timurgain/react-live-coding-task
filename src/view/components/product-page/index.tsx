@@ -1,11 +1,14 @@
 import { FC } from "react";
 import { useParams } from "react-router-dom";
-import { productPageApi as api } from "../../../store/api/product-page";
+import { useFetchProductData } from "../../hooks/product-page";
 
 export const ProductPage: FC = () => {
+  const { productId: id } = useParams<{ productId: string }>();
+  const { product, linkedProducts, error, loading } = useFetchProductData(id);
 
-  const { productId } = useParams<{ productId: string }>();
-  const { data: product, error } = api.useGetProductQuery(productId as string);
+  if (!id) return <div>Product not found</div>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div>
@@ -14,6 +17,8 @@ export const ProductPage: FC = () => {
       name: {product?.name}
       <br />
       price: {product?.price}
+      <br />
+      linkedProducts: {linkedProducts?.map((item) => item.name).join(", ")}
     </div>
   );
 };
