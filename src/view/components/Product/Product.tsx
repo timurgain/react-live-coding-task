@@ -4,9 +4,10 @@ import type { Product } from "../../../models/index";
 type Props = {
   product: Product;
   role: "main" | "related";
+  className?: string;
 };
 
-export function Product({ product, role }: Props) {
+export function Product({ product, role, className }: Props) {
   const title =
     role === "main" ? (
       <h1 className={styles["product__title"]}>{product.name}</h1>

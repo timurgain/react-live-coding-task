@@ -1,5 +1,6 @@
 import { LinkedProduct, Product, ProductLinkType } from '../../../models/index';
 import { useDispatch } from '../../../store/hooks';
+import { productPageActions } from '../../../store/slices/product-page';
 import styles from './LinkedProducts.module.css';
 
 type Props = {
@@ -10,9 +11,10 @@ export function LinkedProducts({ products }: Props) {
 
   const dispatch = useDispatch();
 
-  function handleClick(linkType: ProductLinkType) {
+  function handleClick(product: LinkedProduct) {
+    const linkType = product.linkType;
     if (linkType === 'analog') {
-      console.log('Аналог');
+      dispatch(productPageActions.addProductToCompareList(product))
     }
     if (linkType === 'related') {
       console.log('Сопутствующий');
@@ -41,7 +43,7 @@ export function LinkedProducts({ products }: Props) {
     <ul className={styles['list']}>
       {products.map(product => (
         <li key={product.id} className={styles['product']}>
-          <button className={styles['product__name-btn']} type='button' onClick={() => handleClick(product.linkType)}>{product.name}</button>
+          <button className={styles['product__name-btn']} type='button' onClick={() => handleClick(product)}>{product.name}</button>
           {getProductLinkType(product.linkType)}
         </li>
       ))}

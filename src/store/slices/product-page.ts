@@ -24,9 +24,11 @@ const productPageSlice = createSlice({
       if (!state.comparingProducts) {
         state.comparingProducts = [];
       }
+      if (state.comparingProducts.some((p) => p.id === action.payload.id))
+        return;
       state.comparingProducts.push(action.payload);
     },
-  }
+  },
 });
 
 export const productPageReducer = productPageSlice.reducer;
