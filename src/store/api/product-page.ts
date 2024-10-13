@@ -14,13 +14,13 @@ export const productPageApi = rootApi.injectEndpoints({
       queryFn: async (arg: {
         productId: string;
         categoryId: string | undefined;
-        categoriesSet: Set<categoryId> | undefined
+        categoriesIds: categoryId[] | undefined;
       }) => {
-        const { productId, categoryId, categoriesSet } = arg;
+        const { productId, categoryId, categoriesIds } = arg;
         const linkedProducts = await productPageUseCases.getLinkedProducts(
           productId,
           categoryId,
-          categoriesSet
+          categoriesIds
         );
         return { data: linkedProducts };
       },

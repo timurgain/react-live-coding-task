@@ -13,10 +13,10 @@ export interface IProductPageUseCases {
   getLinkedProducts(
     productId: string,
     categoryId: string,
-    categoriesSet: Set<categoryId>
+    categoriesIds: categoryId[]
   ): Promise<LinkedProduct[]>;
   /**
    * Возвращает Set из id всех категорий, в том числе вложенных
    */
-  getCategoriesIdSet(): Promise<Set<categoryId>>;
+  getCategoriesIdSet(): Promise<categoryId[]>;
 }

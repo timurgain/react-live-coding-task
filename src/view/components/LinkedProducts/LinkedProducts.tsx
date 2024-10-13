@@ -7,6 +7,18 @@ type Props = {
 
 export function LinkedProducts({ products }: Props) {
 
+  function handleClick(linkType: ProductLinkType) {
+    if (linkType === 'analog') {
+      console.log('Аналог');
+    }
+    if (linkType === 'related') {
+      console.log('Сопутствующий');
+    }
+    if (!linkType) {
+      console.log('Неизвестный');
+    }
+  }
+
   if (!products) return null;
   const getProductLinkType = (linkType: ProductLinkType) => {
     if (!linkType) return null;
@@ -26,7 +38,7 @@ export function LinkedProducts({ products }: Props) {
     <ul className={styles['list']}>
       {products.map(product => (
         <li key={product.id} className={styles['product']}>
-          <button className={styles['product__name-btn']} type='button'>{product.name}</button>
+          <button className={styles['product__name-btn']} type='button' onClick={() => handleClick(product.linkType)}>{product.name}</button>
           {getProductLinkType(product.linkType)}
         </li>
       ))}

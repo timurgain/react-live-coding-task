@@ -1,6 +1,5 @@
 import { productPageApi as api } from "../../store/api/product-page";
 
-
 export function useFetchProductData(productId: string | undefined) {
   if (!productId)
     return { product: null, linkedProducts: null, error: null, loading: false };
@@ -12,17 +11,17 @@ export function useFetchProductData(productId: string | undefined) {
   } = api.useGetProductQuery(productId, { skip: !productId });
 
   const {
-    data: categoriesSet,
+    data: categoriesIds,
     error: categoriesError,
-    isLoading: categoriesLoading
-  } = api.useGetCategoriesIdSetQuery(undefined, { skip: !productId })
+    isLoading: categoriesLoading,
+  } = api.useGetCategoriesIdSetQuery(undefined, { skip: !productId });
 
   const {
     data: linkedProducts,
     error: linkedProductsError,
     isLoading: linkedProductsLoading,
   } = api.useGetLinkedProductsQuery(
-    { productId, categoriesSet, categoryId: product?.category?.id },
+    { productId, categoriesIds, categoryId: product?.category?.id },
     { skip: !productId }
   );
 

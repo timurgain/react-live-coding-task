@@ -17,15 +17,15 @@ export class ProductPageUseCases implements IProductPageUseCases {
   async getLinkedProducts(
     productId: string,
     categoryId: string | undefined,
-    categoriesSet: Set<categoryId> | undefined
+    categoriesIds: categoryId[] | undefined
   ): Promise<LinkedProduct[]> {
     const products = await this.productPageRepository.getLinkedProducts(
       productId
     );
-    return addlinkTypeToProducts(products, categoryId, categoriesSet);
+    return addlinkTypeToProducts(products, categoryId, categoriesIds);
   }
 
-  async getCategoriesIdSet(): Promise<Set<categoryId>> {
+  async getCategoriesIdSet(): Promise<categoryId[]> {
     const categories = await this.productPageRepository.getCategories();
     return extractCategoriesIds(categories);
   }
@@ -34,16 +34,16 @@ export class ProductPageUseCases implements IProductPageUseCases {
 function addlinkTypeToProducts(
   products: Product[],
   categoryId: string | undefined,
-  categoriesSet: Set<categoryId> | undefined
+  categoriesIds: categoryId[] | undefined
 ): LinkedProduct[] {
   return products.map((product) => {
     const linkType = () => {
-      const linkedProductCategoryId = product.category?.id
+      const linkedProductCategoryId = product.category?.id;
       if (
         !linkedProductCategoryId ||
         !categoryId ||
-        !categoriesSet ||
-        !categoriesSet.has(linkedProductCategoryId)
+        !categoriesIds ||
+        !categoriesIds.includes(linkedProductCategoryId)
       )
         return undefined;
       if (linkedProductCategoryId === categoryId) return "analog";
@@ -58,11 +58,11 @@ function addlinkTypeToProducts(
 }
 
 export function extractCategoriesIds(categories: Category[]) {
-  const result: Set<categoryId> = new Set();
+  const result: categoryId[] = [];
 
-  function extract(categories: Category[], ids: Set<categoryId>) {
+  function extract(categories: Category[], ids: categoryId[]) {
     for (const category of categories) {
-      ids.add(category.id);
+      ids.push(category.id);
       if (category.children) {
         extract(category.children, ids);
       }
