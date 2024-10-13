@@ -3,16 +3,22 @@ import { productPageUseCases } from "../../init";
 
 export const productPageApi = rootApi.injectEndpoints({
   endpoints: (build) => ({
-
     getProduct: build.query({
-      queryFn: async (id: string) => {
-        const product = await productPageUseCases.getProduct(id);
+      queryFn: async (productId: string) => {
+        const product = await productPageUseCases.getProduct(productId);
         return { data: product };
       },
     }),
     getLinkedProducts: build.query({
-      queryFn: async (id: string) => {
-        const linkedProducts = await productPageUseCases.getLinkedProducts(id);
+      queryFn: async (arg: {
+        productId: string;
+        categoryId: string | undefined;
+      }) => {
+        const { productId, categoryId } = arg;
+        const linkedProducts = await productPageUseCases.getLinkedProducts(
+          productId,
+          categoryId
+        );
         return { data: linkedProducts };
       },
     }),
@@ -22,7 +28,6 @@ export const productPageApi = rootApi.injectEndpoints({
         return { data: categories };
       },
     }),
-    
   }),
   overrideExisting: false,
 });

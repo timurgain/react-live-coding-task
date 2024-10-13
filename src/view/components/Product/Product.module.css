@@ -9,12 +9,12 @@
   border-radius: 5px;
 }
 
-.title {
+.product__title {
   font-size: 1.25rem;
   font-weight: 600;
 }
 
-.price {
+.product__price {
   font-size: 1rem;
   font-weight: 400;
 }

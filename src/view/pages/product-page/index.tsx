@@ -2,6 +2,7 @@ import { FC } from "react";
 import { useParams } from "react-router-dom";
 import { useFetchProductData } from "../../hooks/product-page";
 import { Product } from "../../components/Product/Product";
+import { LinkedProducts } from "../../components/LinkedProducts/LinkedProducts";
 
 export const ProductPage: FC = () => {
   const { productId: id } = useParams<{ productId: string }>();
@@ -15,15 +16,17 @@ export const ProductPage: FC = () => {
     <main>
       <Product product={product} role="main" />
 
-      <ul>
+      <LinkedProducts products={linkedProducts} />
+
+      {/* <ul>
         {linkedProducts?.map((item) => (
           <li key={item.id}>
             <Product product={item} role="related" />
           </li>
         ))}
-      </ul>
+      </ul> */}
 
-      
+
     </main>
   );
 };

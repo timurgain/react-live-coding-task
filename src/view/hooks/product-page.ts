@@ -1,28 +1,32 @@
 import { productPageApi as api } from "../../store/api/product-page";
 
-export function useFetchProductData(id: string | undefined) {
-  if (!id)
+export function useFetchProductData(productId: string | undefined) {
+  if (!productId)
     return { product: null, linkedProducts: null, error: null, loading: false };
 
   const {
     data: product,
     error: productError,
     isLoading: productLoading,
-  } = api.useGetProductQuery(id, { skip: !id });
+  } = api.useGetProductQuery(productId, { skip: !productId });
+
   const {
     data: linkedProducts,
     error: linkedProductsError,
     isLoading: linkedProductsLoading,
-  } = api.useGetLinkedProductsQuery(id, { skip: !id });
+  } = api.useGetLinkedProductsQuery(
+    { productId, categoryId: product?.category?.id },
+    { skip: !productId }
+  );
 
   const error = productError || linkedProductsError;
   let errorMessage: string | null = null;
-  
+
   if (error) {
-    if ('status' in error) {
+    if ("status" in error) {
       errorMessage = `Error: ${error.status}`;
     } else {
-      errorMessage = error.message || 'An unknown error occurred';
+      errorMessage = error.message || "An unknown error occurred";
     }
   }
 

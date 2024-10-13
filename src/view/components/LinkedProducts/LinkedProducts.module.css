@@ -1,0 +1,28 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.product {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.product__name-btn {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 3px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px dashed #ccc;
+  cursor: pointer;
+}
+
+.product__name-btn:hover {
+  border-bottom: 1px solid #ccc;
+}
