@@ -1,38 +1,38 @@
-import { FC, ReactNode, useState } from 'react';
-import ReactModal from 'react-modal';
+import { FC, ReactNode, useState } from "react";
+import ReactModal from "react-modal";
+import styles from "./Modal.module.css";
 
 const customStyles = {
   content: {
-    top: '20%',
-    left: '20%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -100%)",
+    minWidth: "200px",
   },
 };
 
 interface Props {
+  isOpen: boolean;
   children: ReactNode;
   onClose(): void;
 }
 
 export const Modal: FC<Props> = (props: Props) => {
-  const { children, onClose } = props;
-  const [modalIsOpen, setIsOpen] = useState(true);
-
-  function closeModal() {
-    setIsOpen(false);
-    onClose();
-  }
+  const { isOpen=false, children, onClose } = props;
 
   return (
-    <div>
-      <ReactModal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
-        <button type="button" onClick={closeModal}>
-          X
+    <div className={styles['modal']}>
+      <ReactModal
+        isOpen={isOpen}
+        style={customStyles}
+      >
+        <button type="button" onClick={onClose} className={styles['close-btn']}>
+          &#x2717;
         </button>
-        <div>{children}</div>
+        {children}
       </ReactModal>
     </div>
   );

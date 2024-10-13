@@ -30,9 +30,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.625rem;
+  font-size: 0.825rem;
   font-weight: 400;
-  padding: 3px;
+  padding: 4px;
   background-color: transparent;
   border: none;
   cursor: pointer;

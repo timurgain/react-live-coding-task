@@ -1,0 +1,20 @@
+.modal {
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.825rem;
+  font-weight: 400;
+  padding: 4px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}

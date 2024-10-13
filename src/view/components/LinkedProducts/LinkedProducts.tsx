@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { LinkedProduct, Product, ProductLinkType } from '../../../models/index';
+import { LinkedProduct, ProductLinkType } from '../../../models/index';
 import { useDispatch } from '../../../store/hooks';
 import { productPageActions } from '../../../store/slices/product-page';
 import styles from './LinkedProducts.module.css';
@@ -17,13 +17,9 @@ export function LinkedProducts({ products, className }: Props) {
     const linkType = product.linkType;
     if (linkType === 'analog') {
       dispatch(productPageActions.addProductToCompareList(product))
+      return;
     }
-    if (linkType === 'related') {
-      console.log('Сопутствующий');
-    }
-    if (!linkType) {
-      console.log('Неизвестный');
-    }
+    dispatch(productPageActions.setProductModal(product));
   }
 
   if (!products) return null;

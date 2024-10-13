@@ -20,9 +20,9 @@ export function Product({ product, role, className }: Props) {
 
   const title =
     role === "main" ? (
-      <h1 className={styles["product__title"]}>{product.name}</h1>
+      <h1 className={styles["product__title"]}>{product?.name}</h1>
     ) : (
-      <span className={styles["product__title"]}>{product.name}</span>
+      <span className={styles["product__title"]}>{product?.name}</span>
     );
 
   const removeBtn =
@@ -31,6 +31,8 @@ export function Product({ product, role, className }: Props) {
         &#x2717;
       </button>
     ) : null;
+
+  if (!product) return null;
 
   return (
     <article className={clsx(styles["product"], className)}>

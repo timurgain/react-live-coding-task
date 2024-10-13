@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Product } from "../../models";
 
 type CatalogPageState = {
-  product: Product | undefined;
+  modalProduct: Product | undefined;
   linkedProducts: Product[] | undefined;
   comparingProducts: Product[] | undefined;
 };
 
 const defaultState: CatalogPageState = {
-  product: undefined,
+  modalProduct: undefined,
   linkedProducts: undefined,
   comparingProducts: undefined,
 };
@@ -33,8 +33,13 @@ const productPageSlice = createSlice({
       action: PayloadAction<Product>
     ) => {
       if (!state.comparingProducts) return;
-      state.comparingProducts = state.comparingProducts.filter((p) => p.id !== action.payload.id);
+      state.comparingProducts = state.comparingProducts.filter(
+        (p) => p.id !== action.payload.id
+      );
     },
+    setProductModal: (state: CatalogPageState, action: PayloadAction<Product | undefined>) => {
+      state.modalProduct = action.payload;
+    }
   },
 });
 
