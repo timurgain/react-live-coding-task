@@ -1,4 +1,5 @@
 import { LinkedProduct, Product, ProductLinkType } from '../../../models/index';
+import { useDispatch } from '../../../store/hooks';
 import styles from './LinkedProducts.module.css';
 
 type Props = {
@@ -6,6 +7,8 @@ type Props = {
 }
 
 export function LinkedProducts({ products }: Props) {
+
+  const dispatch = useDispatch();
 
   function handleClick(linkType: ProductLinkType) {
     if (linkType === 'analog') {
