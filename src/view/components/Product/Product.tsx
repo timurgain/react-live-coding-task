@@ -1,4 +1,5 @@
 import styles from "./Product.module.css";
+import clsx from "clsx";
 import type { Product } from "../../../models/index";
 
 type Props = {
@@ -16,7 +17,7 @@ export function Product({ product, role, className }: Props) {
     );
 
   return (
-    <article className={styles["product"]}>
+    <article className={clsx(styles["product"], className)}>
       {title}
       <p className={styles["product__price"]}>{product.price} руб.</p>
     </article>

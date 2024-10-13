@@ -1,5 +1,49 @@
 .main {
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(50%, 1fr) 1fr;
+  grid-template-rows: minmax(20px, auto) auto auto;
   gap: 10px;
+
+  grid-template-areas:
+    ". title"
+    "product compare"
+    "linked linked";
+}
+
+.title-area {
+  grid-area: title;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.product-area {
+  min-width: 50%;
+  grid-area: product;
+}
+
+.compare-area {
+  grid-area: compare;
+}
+
+.linked-area {
+  grid-area: linked;
+}
+
+@media screen and (max-width: 400px) {
+  .main {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(20px, auto) auto auto auto;
+    gap: 10px;
+
+    grid-template-areas:
+      "product"
+      "linked"
+      "title"
+      "compare";
+  }
+
+  .product-area {
+    min-width: 100%;
+  }
 }

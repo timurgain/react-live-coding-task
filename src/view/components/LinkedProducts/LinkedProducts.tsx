@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { LinkedProduct, Product, ProductLinkType } from '../../../models/index';
 import { useDispatch } from '../../../store/hooks';
 import { productPageActions } from '../../../store/slices/product-page';
@@ -5,9 +6,10 @@ import styles from './LinkedProducts.module.css';
 
 type Props = {
   products: LinkedProduct[] | undefined;
+  className?: string;
 }
 
-export function LinkedProducts({ products }: Props) {
+export function LinkedProducts({ products, className }: Props) {
 
   const dispatch = useDispatch();
 
@@ -40,7 +42,7 @@ export function LinkedProducts({ products }: Props) {
   }
 
   return (
-    <ul className={styles['list']}>
+    <ul className={clsx(styles['list'], className)}>
       {products.map(product => (
         <li key={product.id} className={styles['product']}>
           <button className={styles['product__name-btn']} type='button' onClick={() => handleClick(product)}>{product.name}</button>

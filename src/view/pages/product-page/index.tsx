@@ -1,4 +1,4 @@
-import styles from './page.module.css';
+import styles from "./page.module.css";
 import { FC } from "react";
 import { useParams } from "react-router-dom";
 import { useFetchProductData } from "../../hooks/product-page";
@@ -11,7 +11,7 @@ import { compareListSelector } from "../../../store/selectors/product-page";
 export const ProductPage: FC = () => {
   const { productId: id } = useParams<{ productId: string }>();
   const { product, linkedProducts, error, loading } = useFetchProductData(id);
-  const compareProducts = useSelector(compareListSelector)
+  const compareProducts = useSelector(compareListSelector);
 
   if (loading && !product) return <div>Loading...</div>;
   if (error && !product) return <div>Error: {error}</div>;
@@ -19,10 +19,22 @@ export const ProductPage: FC = () => {
 
   return (
     <main className={styles.main}>
-      {!!compareProducts.length && <h2 className={styles['comparison-title']}>Сравнение</h2>}
-      <Product product={product} role="main" />
-      <CompareList products={compareProducts} />
-      <LinkedProducts products={linkedProducts} />
+      {!!compareProducts.length && (
+        <h2 className={styles["title-area"]}>Сравнение</h2>
+      )}
+      <Product
+        product={product}
+        role="main"
+        className={styles["product-area"]}
+      />
+      <CompareList
+        products={compareProducts}
+        className={styles["compare-area"]}
+      />
+      <LinkedProducts
+        products={linkedProducts}
+        className={styles["linked-area"]}
+      />
     </main>
   );
 };
