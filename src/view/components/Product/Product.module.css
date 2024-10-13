@@ -1,10 +1,11 @@
 .product {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   gap: 10px;
-  padding: 5px;
+  padding: 5px 15px 5px 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
@@ -18,4 +19,21 @@
 .product__price {
   font-size: 1rem;
   font-weight: 400;
+}
+
+.product__remove-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.625rem;
+  font-weight: 400;
+  padding: 3px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }

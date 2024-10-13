@@ -28,6 +28,13 @@ const productPageSlice = createSlice({
         return;
       state.comparingProducts.push(action.payload);
     },
+    removeProductFromCompareList: (
+      state: CatalogPageState,
+      action: PayloadAction<Product>
+    ) => {
+      if (!state.comparingProducts) return;
+      state.comparingProducts = state.comparingProducts.filter((p) => p.id !== action.payload.id);
+    },
   },
 });
 
