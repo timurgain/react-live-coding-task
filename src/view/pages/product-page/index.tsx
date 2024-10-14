@@ -1,21 +1,19 @@
 import styles from "./page.module.css";
 import { FC } from "react";
 import { useParams } from "react-router-dom";
-import { useFetchProductData } from "../../hooks/product-page";
+import { useFetchProductData } from "../../hooks/product-page/useFetchProductData";
 import { Product } from "../../components/Product/Product";
 import { LinkedProducts } from "../../components/LinkedProducts/LinkedProducts";
 import { CompareList } from "../../components/CompareList/CompareList";
-import { useDispatch, useSelector } from "../../../store/hooks";
-import { compareListSelector, productModalSelector } from "../../../store/selectors/product-page";
-import { Modal } from "../../components/Modal/Modal";
-import { productPageActions } from "../../../store/slices/product-page";
+import { ModalWindow } from "../../components/ModalWindow/ModalWindow";
+import { useCompareProducts } from "../../hooks/product-page/useCompareProducts";
+import { useProductModal } from "../../hooks/product-page/useProductModal";
 
 export const ProductPage: FC = () => {
   const { productId: id } = useParams<{ productId: string }>();
   const { product, linkedProducts, error, loading } = useFetchProductData(id);
-  const compareProducts = useSelector(compareListSelector);
-  const productModal = useSelector(productModalSelector);
-  const dispatch = useDispatch();
+  const { compareProducts, addToCompareList } = useCompareProducts();
+  const { productModal, openModal, closeModal } = useProductModal();
 
   if (loading && !product) return <div>Loading...</div>;
   if (error && !product) return <div>Error: {error}</div>;
@@ -38,12 +36,13 @@ export const ProductPage: FC = () => {
       <LinkedProducts
         products={linkedProducts}
         className={styles["linked-area"]}
+        openProductModal={openModal}
+        addToCompareList={addToCompareList}
       />
 
-      <Modal isOpen={!!productModal} onClose={() => {dispatch(productPageActions.setProductModal(undefined))}}>
+      <ModalWindow isOpen={!!productModal} onClose={closeModal}>
         <Product product={productModal} role="main" />
-      </Modal>
+      </ModalWindow>
     </main>
-
   );
 };

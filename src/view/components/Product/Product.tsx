@@ -5,7 +5,7 @@ import { useDispatch } from "../../../store/hooks";
 import { productPageActions } from "../../../store/slices/product-page";
 
 type Props = {
-  product: Product;
+  product: Product | undefined;
   role: "main" | "related";
   className?: string;
 };
@@ -14,6 +14,8 @@ export function Product({ product, role, className }: Props) {
 
   const dispatch = useDispatch();
 
+  if (!product) return null;
+  
   const handleremove = () => {
     dispatch(productPageActions.removeProductFromCompareList(product));
   };
@@ -31,8 +33,6 @@ export function Product({ product, role, className }: Props) {
         &#x2717;
       </button>
     ) : null;
-
-  if (!product) return null;
 
   return (
     <article className={clsx(styles["product"], className)}>

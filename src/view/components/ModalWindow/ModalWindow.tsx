@@ -1,6 +1,6 @@
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode } from "react";
 import ReactModal from "react-modal";
-import styles from "./Modal.module.css";
+import styles from "./ModalWindow.module.css";
 
 const customStyles = {
   content: {
@@ -20,7 +20,7 @@ interface Props {
   onClose(): void;
 }
 
-export const Modal: FC<Props> = (props: Props) => {
+export const ModalWindow: FC<Props> = (props: Props) => {
   const { isOpen=false, children, onClose } = props;
 
   return (

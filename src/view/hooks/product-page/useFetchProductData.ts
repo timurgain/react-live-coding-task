@@ -1,4 +1,4 @@
-import { productPageApi as api } from "../../store/api/product-page";
+import { productPageApi as api } from "../../../store/api/product-page";
 
 export function useFetchProductData(productId: string | undefined) {
   if (!productId)
