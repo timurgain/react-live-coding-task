@@ -38,6 +38,20 @@ export const products: Product[] = [
     price: 666.7,
     categoryId: '3',
   },
+
+  // additional products to test compare function
+  {
+    id: '7',
+    name: 'Товар 7',
+    price: 10.99,
+    categoryId: '1.1.1',
+  },
+  {
+    id: '8',
+    name: 'Товар 8',
+    price: 17.99,
+    categoryId: '1.1.1',
+  },
 ];
 
 export const categories: Category[] = [
